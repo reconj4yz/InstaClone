@@ -19,7 +19,7 @@ router.get("/login", function (req, res) {
   res.render("login", { footer: false });
 });
 
-router.get("/like/:postid", async function (req, res) {
+router.get("/like/post/:id", isLoggedIn, async function (req, res) {
   const post = await postModel.findOne({ _id: req.params.postid });
   const user = await userModel.findOne({ username: req.session.passport.user });
   if (post.like.indexOf(user._id) === -1) {

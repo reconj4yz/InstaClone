@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  profileImage:String,
   picture: {
     type: String,
     default: "def.png"
