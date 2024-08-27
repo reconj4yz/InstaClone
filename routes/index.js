@@ -88,11 +88,11 @@ router.get("/profile/:user", isLoggedIn, async function (req, res) {
   if (user.username === req.params.user) {
     res.redirect("/profile");
   }
-
+ 
   let userprofile = await userModel
     .findOne({ username: req.params.user })
     .populate("posts");
-
+ 
   res.render("userprofile", { footer: true, userprofile, user });
 });
 
