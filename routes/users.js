@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const plm = require("passport-local-mongoose");
-
-mongoose.connect("mongodb://127.0.0.1:27017/instainsta");
+const DB_URL = process.env.ATLASDB_URL
+mongoose.connect(DB_URL);
 
 const userSchema = mongoose.Schema({
   username: String,

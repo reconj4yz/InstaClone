@@ -1,9 +1,14 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const DB_URL = process.env.ATLASDB_URL;
 var expressSession = require('express-session');
+const MongoStore = require('connect-mongo');
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,11 +20,25 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+const store = MongoStore.create({
+  mongoUrl: DB_URL,
+  crypto:{
+    secret: process.env.SECRET
+  },
+  touchAfter: 24*3600,
+});
+
+store.on("error", ()=>{
+  console.log("ERROR in MONGO SESSION STORE", err)
+});
+
 app.use(expressSession({
+  store: store,
   resave: false,
   saveUninitialized: false,
-  secret: "heyheyehhdd"
+  secret: process.env.SECRET,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(usersRouter.serializeUser());
