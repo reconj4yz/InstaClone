@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 const store = MongoStore.create({
   mongoUrl: DB_URL,
   crypto:{
-    secret: process.env.SECRET
+    secret:process.env.SECRET
   },
   touchAfter: 24*3600,
 });
@@ -36,7 +36,7 @@ app.use(expressSession({
   store: store,
   resave: false,
   saveUninitialized: false,
-  secret: process.env.SECRET,
+  secret: process.env.SECRET
 }));
 
 app.use(passport.initialize());
